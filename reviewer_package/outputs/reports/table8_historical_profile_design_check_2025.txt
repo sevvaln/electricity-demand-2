@@ -1,0 +1,21 @@
+Controlled Historical-Feature Design Check for Table 8 Non-Recursive Historical Population-Weighted Forecast
+
+Goal:
+- Compare validated previous-year-only grouped profile logic against a multi-year grouped profile design.
+- Keep train/test split, hyperparameters, target, exact previous-year analog features, and evaluation pipeline fixed.
+- Change only the grouped historical profile construction logic.
+
+                 model_variant grouped_profile_logic grouped_profile_source_for_2025  train_rows  test_rows  train_R2  train_MAE  train_RMSE  train_MAPE  test_R2    test_MAE   test_RMSE  test_MAPE   gap_R2    gap_RMSE  gap_MAPE
+A_validated_previous_year_only    previous_year_only                       2024 only       17496       8760  0.984407 594.869548  785.909093    1.602573 0.928574 1263.119903 1755.467882   3.251476 0.055833  969.558789  1.648903
+ B_multi_year_grouped_profiles            multi_year               2022-2024 history       17496       8760  0.984293 596.009700  788.780667    1.607568 0.918537 1449.783187 1874.751176   3.649198 0.065755 1085.970508  2.041630
+
+Incremental difference: B minus A
+- test_R2 difference: -0.010037
+- test_RMSE difference: 119.283294
+- test_MAPE difference: 0.397722
+- gap_R2 difference: 0.009922
+- gap_RMSE difference: 116.411719
+- gap_MAPE difference: 0.392727
+
+Recommendation:
+The multi-year grouped profile logic does not deliver a clear enough improvement in the controlled 2025 backtest. Preserve the validated previous-year-only specification for 2026 forecasting.

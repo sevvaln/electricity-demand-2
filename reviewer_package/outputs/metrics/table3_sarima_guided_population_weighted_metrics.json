@@ -1,0 +1,25 @@
+{
+  "model_key": "table3_sarima_guided_population_weighted",
+  "label": "Table 3 SARIMA-Guided Population-Weighted",
+  "target_column": "consumption",
+  "feature_columns": [
+    "weighted_HDD",
+    "weighted_CDD",
+    "night",
+    "weekend",
+    "log_consumption_lag_1h",
+    "log_consumption_seasonal_diff_24h"
+  ],
+  "test_metrics_consumption_scale": {
+    "R2": 0.9623587177632642,
+    "MAE": 946.0022740261129,
+    "RMSE": 1274.3712660566666,
+    "MAPE": 2.3344204954517287
+  },
+  "row_count": 8760,
+  "first_timestamp": "2025-01-01 00:00:00",
+  "last_timestamp": "2025-12-31 23:00:00",
+  "prediction_path": "C:\\Users\\Monster\\OneDrive\\Masaüstü\\proje2\\outputs\\xgboost\\table3_sarima_guided_population_weighted_predictions_2025.csv",
+  "method": "one_step_ahead",
+  "population_weighted_temperature_features": true
+}

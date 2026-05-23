@@ -1,0 +1,27 @@
+Table 3 Medium-Horizon Leakage Audit
+
+Forbidden direct-lag features:
+- Forbidden patterns checked: ['log_consumption_lag_1h', 'consumption_lag_1h', 'log_consumption_seasonal_diff_24h']
+- Present in final feature set: []
+
+Feature family rules:
+- No log_consumption_lag_1h.
+- No consumption_lag_1h.
+- No log_consumption_seasonal_diff_24h.
+- No recursive predicted feedback: features are constructed only from observed history.
+
+Empirical forward-leakage audit:
+- Cutoff 2025-01-31 23:00:00: max absolute feature difference for rows <= cutoff = 0.000000000000; changed_features=None
+- Cutoff 2025-03-15 12:00:00: max absolute feature difference for rows <= cutoff = 0.000000000000; changed_features=None
+- Cutoff 2025-06-30 23:00:00: max absolute feature difference for rows <= cutoff = 0.000000000000; changed_features=None
+- Cutoff 2025-09-30 23:00:00: max absolute feature difference for rows <= cutoff = 0.000000000000; changed_features=None
+
+Feature-generation timeline summary:
+- hist_mean_by_hour / hist_mean_by_hour_day_of_week / hist_mean_by_hour_month use strict prior grouped sums and counts only.
+- prev_month_hour_mean / prev_month_hour_day_of_week_mean use completed previous-month profiles only.
+- prev_7d_same_hour_mean uses the previous seven same-hour observations via shift(1) within each hour group.
+- prev_30d_same_hour_mean uses the previous same-hour profile window only.
+- prev_4week_same_hour_day_of_week_mean uses only prior weekly occurrences for the same hour/day-of-week combination.
+
+Leakage-safe conclusion:
+LEAKAGE_SAFE = True, provided the model is interpreted as a non-recursive historical-profile design that may use actual completed history strictly before each target timestamp.

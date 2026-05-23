@@ -1,0 +1,41 @@
+Table 3 Light Validation Report: Population-Weighted SARIMA-Guided Model
+
+1. Correctness Check
+- Expected target: consumption
+- Actual target: consumption
+- Target match: True
+- Expected features: ['weighted_HDD', 'weighted_CDD', 'night', 'weekend', 'log_consumption_lag_1h', 'log_consumption_seasonal_diff_24h']
+- Actual features: ['weighted_HDD', 'weighted_CDD', 'night', 'weekend', 'log_consumption_lag_1h', 'log_consumption_seasonal_diff_24h']
+- Missing expected features: []
+- Unexpected features: []
+- weighted_HDD / weighted_CDD used: True
+- Old HDD / CDD still present in feature set: []
+
+2. Train/Test Split Validation
+- Expected train years: [2022, 2023, 2024]
+- Actual train years: [2022, 2023, 2024]
+- Expected test year: 2025
+- Actual test years: [2025]
+- Train rows: 26279
+- Test rows: 8760
+- Train datetime min/max: 2022-01-02 01:00:00 / 2024-12-31 23:00:00
+- Test datetime min/max: 2025-01-01 00:00:00 / 2025-12-31 23:00:00
+- Train/test datetime overlap count: 0
+
+3. Leakage Check
+- This is a short-term one-step-ahead model, not a fully blind long-term forecast.
+- log_consumption_lag_1h is built with shift(1), so each row uses only past log consumption.
+- log_consumption_seasonal_diff_24h is built as lag_1h minus lag_25h, so it also uses only past values.
+- No future consumption is used in the feature construction itself.
+- During 2025 evaluation, the method is one-step-ahead; this means observed past 2025 consumption can inform the lag features at each step.
+- Evaluation mode recorded in test metrics: one_step_ahead
+
+4. Performance Summary
+- Train R2 / MAE / RMSE / MAPE: 0.971350 / 772.992323 / 1029.136384 / 2.048740
+- Test R2 / MAE / RMSE / MAPE: 0.962359 / 946.002274 / 1274.371266 / 2.334420
+- Train-test gap R2: 0.008991
+- Train-test gap RMSE: 245.234882
+- Train-test gap MAPE: 0.285681
+
+Conclusion
+The Table 3 implementation is consistent with the intended SARIMA-guided short-term design: target is consumption, weighted_HDD/weighted_CDD replace old HDD/CDD, train/test split is correct, and lag features are backward-looking. This model should be interpreted as a one-step-ahead short-term benchmark rather than a fully blind long-horizon forecast.

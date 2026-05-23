@@ -1,0 +1,34 @@
+Table 3 Forecast 2026 Methodology Note
+
+Model: Table 3 SARIMA-Guided Population-Weighted
+Target: consumption
+Training period used for final forecast refit: [2022, 2023, 2024, 2025]
+Feature set: weighted_HDD, weighted_CDD, night, weekend, log_consumption_lag_1h, log_consumption_seasonal_diff_24h
+
+Rolling month-ahead forecast design:
+Table 3 2026 forecast was redesigned as a month-ahead rolling operational forecast. At the start of each 2026 month, the model is refit using all history available up to the previous month-end. Within the forecast month, recursive one-step-ahead updates are still used for log_consumption_lag_1h and log_consumption_seasonal_diff_24h. However, predicted values from month M are not propagated into month M+1 initialization. Because true 2026 actual consumption is unavailable in the current project snapshot, the operational-refresh assumption was implemented using a transparent proxy: before forecasting month M+1, the completed month M history is reinitialized from the same month-day-hour observed 2025 consumption path rather than from month M predictions. Thus the design preserves monthly operational reset logic while avoiding autonomous full-year recursive carry-forward.
+- 2026-01: refit history through 2025-12-31 23:00:00; training rows=35039; monthly initialization=observed 2025 year-end history
+- 2026-02: refit history through 2026-01-31 23:00:00; training rows=35783; monthly initialization=proxy actualized prior 2026 months derived from 2025 analogs
+- 2026-03: refit history through 2026-02-28 23:00:00; training rows=36455; monthly initialization=proxy actualized prior 2026 months derived from 2025 analogs
+- 2026-04: refit history through 2026-03-31 23:00:00; training rows=37199; monthly initialization=proxy actualized prior 2026 months derived from 2025 analogs
+- 2026-05: refit history through 2026-04-30 23:00:00; training rows=37919; monthly initialization=proxy actualized prior 2026 months derived from 2025 analogs
+- 2026-06: refit history through 2026-05-31 23:00:00; training rows=38663; monthly initialization=proxy actualized prior 2026 months derived from 2025 analogs
+- 2026-07: refit history through 2026-06-30 23:00:00; training rows=39383; monthly initialization=proxy actualized prior 2026 months derived from 2025 analogs
+- 2026-08: refit history through 2026-07-31 23:00:00; training rows=40127; monthly initialization=proxy actualized prior 2026 months derived from 2025 analogs
+- 2026-09: refit history through 2026-08-31 23:00:00; training rows=40871; monthly initialization=proxy actualized prior 2026 months derived from 2025 analogs
+- 2026-10: refit history through 2026-09-30 23:00:00; training rows=41591; monthly initialization=proxy actualized prior 2026 months derived from 2025 analogs
+- 2026-11: refit history through 2026-10-31 23:00:00; training rows=42335; monthly initialization=proxy actualized prior 2026 months derived from 2025 analogs
+- 2026-12: refit history through 2026-11-30 23:00:00; training rows=43055; monthly initialization=proxy actualized prior 2026 months derived from 2025 analogs
+
+Exogenous input handling:
+2026 weighted_HDD and weighted_CDD were generated using a seasonal-naive weather proxy: for each 2026 month-day-hour, the population-weighted HDD/CDD values from the same month-day-hour in 2025 were copied forward. This preserves the validated population-weighted temperature construction while avoiding any unavailable true 2026 weather inputs.
+
+Validation checks:
+- Forecast row count: 8760
+- Datetime min/max: 2026-01-01 00:00:00 / 2026-12-31 23:00:00
+- Duplicate timestamp count: 0
+- Issues: None
+
+Previous implementation retained for comparison:
+- Saved full-year recursive output: C:\Users\Monster\OneDrive\Masaüstü\proje2\outputs\xgboost\table3_forecast_2026_full_year_recursive_previous.csv
+- Comparison note: C:\Users\Monster\OneDrive\Masaüstü\proje2\outputs\xgboost\table3_forecast_2026_rolling_vs_full_year_recursive.txt

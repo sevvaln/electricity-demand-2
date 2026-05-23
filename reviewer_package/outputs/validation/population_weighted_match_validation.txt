@@ -1,0 +1,30 @@
+Population / Temperature City Match Validation
+
+Years: 2022, 2023, 2024, 2025
+Temperature unique raw cities: 83
+Population unique raw cities: 82
+Matched city count: 82
+Every temperature city has a population value: True
+
+Manual city-name mapping dictionary:
+- 'KARABUK': 'KARABÜK'
+- 'KARABÜK KAPULLU': 'KARABÜK'
+
+Unmatched temperature cities:
+(none)
+
+Unmatched population cities:
+(none)
+
+Sample matched rows:
+city_original city_standardized city_key_raw city_key population_city_original  population
+        ADANA             ADANA        ADANA    ADANA                    ADANA   2274106.0
+     ADIYAMAN          ADIYAMAN     ADIYAMAN ADIYAMAN                 ADIYAMAN    635169.0
+        AFYON             AFYON        AFYON    AFYON                    AFYON    747555.0
+         AĞRI              AĞRI         AGRI     AGRI                     AĞRI    510626.0
+      AKSARAY           AKSARAY      AKSARAY  AKSARAY                  AKSARAY    433055.0
+       AMASYA            AMASYA       AMASYA   AMASYA                   AMASYA    338267.0
+       ANKARA            ANKARA       ANKARA   ANKARA                   ANKARA   5782285.0
+      ANTALYA           ANTALYA      ANTALYA  ANTALYA                  ANTALYA   2688004.0
+      ARDAHAN           ARDAHAN      ARDAHAN  ARDAHAN                  ARDAHAN     92481.0
+       ARTVİN            ARTVİN       ARTVIN   ARTVIN                   ARTVİN    169403.0

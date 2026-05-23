@@ -1,0 +1,17 @@
+Population-Weighted HDD/CDD Methodology Note
+
+Base thresholds:
+- HDD base: 18.0
+- CDD base: 24.0
+
+Method:
+- Province-level HDD and CDD are computed first from observed province temperatures.
+- National weighted HDD/CDD is then aggregated using population-based weights.
+- Simple averaging is not used.
+- Weighted average temperature is not used as an intermediate step.
+
+Coverage rule:
+- For years with full provincial coverage, strict full-coverage weights are used.
+- For years with incomplete provincial temperature coverage, the national weighted HDD/CDD series is computed using population weights renormalized over the provinces available in that year.
+- This avoids artificial temperature imputation while keeping the weighting structure population-based.
+- No missing province temperatures are imputed.
