@@ -1,0 +1,34 @@
+Final 2026 Forecast Model Comparison
+
+Model 1: Table 3 SARIMA-Guided Population-Weighted
+- Short-term model extended to 2026 via month-ahead rolling operational forecasts.
+- Information set: 2026 exogenous weather proxy + recursive within-month lag updates + monthly operational reset.
+- Between forecast months, predicted values are not carried forward; monthly reinitialization uses externally refreshed history assumptions.
+
+Model 2: Table 8 Non-Recursive Historical Population-Weighted Forecast
+- Long-term direct-batch model with locked Model C hyperparameters.
+- Information set: 2026 exogenous proxies + 2025-only historical analog/profile features.
+- No recursive feedback and no 2026 actual consumption usage.
+
+Methodological comparison:
+- Table 3 is recursive only within each forecast month; it no longer runs as an autonomous full-year recursive simulation.
+- Table 8 is non-recursive and direct-batch; each 2026 hour is predicted from exogenous inputs and 2025 historical structure only.
+- Table 3 reflects one-step-ahead SARIMA-guided persistence logic.
+- Table 8 reflects historical-analog long-term structure with population-weighted weather and locked Model C regularization.
+
+Exogenous assumptions:
+- Weather: 2026 weighted_HDD and weighted_CDD were generated using a seasonal-naive weather proxy: for each 2026 month-day-hour, the population-weighted HDD/CDD values from the same month-day-hour in 2025 were copied forward. This preserves the validated population-weighted temperature construction while avoiding any unavailable true 2026 weather inputs.
+- Macro: 2026 PMI_prev_month and IR_prev_month were generated using a seasonal-naive monthly macro scenario. Assumed monthly 2026 PMI and IR levels were set equal to the corresponding observed 2025 monthly values. Release alignment was preserved: January 2026 uses December 2025 observed values, while February-December 2026 use the assumed previous-month 2026 values.
+
+Validation summary:
+- Table 3 output issues: None
+- Table 3 previous full-year recursive issues: None
+- Table 8 output issues: None
+- Table 8 feature frame issues: None
+- Final 2026 coverage: 2026-01-01 00:00:00 to 2026-12-31 23:00:00 (8760 rows)
+- Table 3 rolling vs previous recursive comparison file: C:\Users\Monster\OneDrive\Masaüstü\proje2\outputs\xgboost\table3_forecast_2026_rolling_vs_full_year_recursive.csv
+
+Forecast interpretation notes:
+- Table 3 may still react strongly within a month because of recursive lag updates, but month-to-month forecast drift is no longer allowed to compound autonomously.
+- Table 8 may be smoother and more anchored to 2025 structural analogs and exogenous assumptions.
+- Differences between the two paths should be interpreted as information-set and forecast-logic differences, not only model-form differences.

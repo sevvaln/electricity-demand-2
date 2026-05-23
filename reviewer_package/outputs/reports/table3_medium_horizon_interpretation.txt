@@ -1,0 +1,79 @@
+Table 3 Medium-Horizon Non-Recursive Variant
+
+Core question:
+Can we retain SARIMA-style temporal intelligence WITHOUT direct hourly actual lag dependence?
+
+Answer framework:
+- This model removes direct hourly lag usage and recursive predicted feedback.
+- It keeps temporal intelligence through calendar seasonality, cyclic encodings, and leakage-safe historical profile features built from completed history only.
+
+Overall metrics comparison:
+                             model_name  train_R2  train_MAE  train_RMSE  train_MAPE  test_R2    test_MAE   test_RMSE  test_MAPE   gap_R2    gap_RMSE  gap_MAPE           target                                               workflow
+     A) Original Table 3 One-Step-Ahead  0.971350 772.992323 1029.136384    2.048740 0.962359  946.002274 1274.371266   2.334420 0.008991  245.234882  0.285681      consumption                              one_step_ahead_actual_lag
+ B) Current Table 3 Rolling Month-Ahead  0.971081 789.252436 1050.317359    2.077465 0.491472 3622.350744 4684.048722   8.725380 0.479609 3633.731363  6.647915      consumption                   monthly_refit_recursive_within_month
+    C) Table 8 Non-Recursive Historical  0.984407 594.869548  785.909093    1.602573 0.928574 1263.119903 1755.467882   3.251476 0.055833  969.558789  1.648903 sqrt_consumption                        non_recursive_historical_analog
+D) Table 3 Medium-Horizon Non-Recursive  0.987427 511.201018  683.204915    1.382874 0.948158 1056.126057 1495.565185   2.662670 0.039269  812.360270  1.279795      consumption non_recursive_historical_profiles_no_direct_hourly_lag
+
+Medium-horizon monthly stability:
+ month  medium_horizon_R2  medium_horizon_MAE  medium_horizon_RMSE  medium_horizon_MAPE  original_one_step_R2  original_one_step_MAE  original_one_step_RMSE  original_one_step_MAPE  rolling_month_ahead_R2  rolling_month_ahead_MAE  rolling_month_ahead_RMSE  rolling_month_ahead_MAPE  table8_R2  table8_MAE  table8_RMSE  table8_MAPE  delta_vs_original_R2  delta_vs_original_RMSE  delta_vs_rolling_R2  delta_vs_rolling_RMSE  delta_vs_table8_R2  delta_vs_table8_RMSE  rmse_rank_desc  r2_rank_asc  is_weak_month  is_strong_month
+     1           0.965366          709.933929          1019.028836             1.777978              0.941541             932.066148             1323.904823                2.285443                0.175004              3895.662781               4973.461045                  9.107695   0.951409  926.374440  1207.011744     2.355030              0.023824             -304.875986             0.790362           -3954.432209            0.013957           -187.982907               9           10              0                1
+     2           0.876490         1600.317992          2042.812442             3.724829              0.933194            1049.963192             1502.402088                2.518747               -0.205562              5331.549657               6382.234674                 12.115982   0.908226 1433.564469  1760.916224     3.363989             -0.056704              540.410354             1.082052           -4339.422232           -0.031735            281.896218               3            3              1                0
+     3           0.926046         1107.016613          1420.525071             3.068121              0.950114             939.423040             1166.693561                2.588410                0.461743              3141.156575               3832.331909                  8.300837   0.901547 1343.538169  1639.013502     3.760437             -0.024068              253.831510             0.464303           -2411.806839            0.024499           -218.488431               5            4              0                0
+     4           0.818968         1533.558506          2161.143992             4.130037              0.944282             899.277097             1198.952576                2.412555                0.369749              3040.607558               4032.387152                  8.197666   0.803496 1770.653668  2251.601657     4.704086             -0.125315              962.191416             0.449218           -1871.243160            0.015472            -90.457665               2            1              1                0
+     5           0.958497          730.104774           968.709572             1.955832              0.945828             816.181909             1106.721394                2.110696                0.557999              2466.504217               3161.286226                  6.256977   0.926236 1031.781422  1291.440619     2.749409              0.012668             -138.011822             0.400498           -2192.576655            0.032261           -322.731047              10            6              0                1
+     6           0.861012         2036.110973          2699.193755             5.614098              0.976392             834.600985             1112.428622                2.199070                0.457151              3705.228329               5334.400846                 11.115520   0.764272 2435.577564  3515.214760     7.320013             -0.115380             1586.765132             0.403862           -2635.207092            0.096741           -816.021005               1            2              1                0
+     7           0.950168         1085.852420          1428.774051             2.276899              0.955257             994.282632             1353.851574                2.053253                0.518377              3511.261157               4441.855373                  7.222841   0.923458 1436.944376  1770.765591     3.137665             -0.005089               74.922477             0.431791           -3013.081323            0.026710           -341.991540               4            5              0                0
+     8           0.964908          863.819518          1112.690823             1.860936              0.948240            1030.342761             1351.351436                2.165671                0.200295              4394.966566               5311.716959                  9.049878   0.943799 1107.304874  1408.128604     2.394546              0.016668             -238.660613             0.764613           -4199.026136            0.021109           -295.437781               6            9              0                0
+     9           0.967960          857.580172          1045.584227             2.052354              0.953899             984.317053             1254.197378                2.371956                0.336099              3820.029749               4759.517605                  8.878234   0.930744 1317.822286  1537.232249     3.239494              0.014061             -208.613151             0.631860           -3713.933378            0.037216           -491.648022               8           11              0                1
+    10           0.960401          745.421708           916.693023             2.006322              0.944074             862.477462             1089.400826                2.314116                0.564032              2436.380613               3041.650027                  6.302603   0.970270  620.842292   794.284440     1.703874              0.016327             -172.707803             0.396369           -2124.957004           -0.009869            122.408583              11            7              0                1
+    11           0.973902          621.428379           790.016857             1.621342              0.943126             886.908718             1166.241642                2.297967                0.260865              3264.450736               4204.298094                  8.083047   0.965463  727.738993   908.818523     1.930523              0.030776             -376.224785             0.713036           -3414.281238            0.008439           -118.801666              12           12              0                1
+    12           0.962521          861.617691          1104.214493             2.055338              0.924046            1126.475819             1571.935428                2.711190               -0.002838              4604.556479               5711.819190                 10.445697   0.939367 1060.478622  1404.476431     2.504643              0.038475             -467.720935             0.965359           -4607.604697            0.023154           -300.261938               7            8              0                0
+
+Feature family importance:
+            family  importance
+historical_profile    0.716985
+          calendar    0.192535
+            cyclic    0.069461
+           weather    0.021019
+
+Top individual features:
+                              feature  importance             family
+prev_4week_same_hour_day_of_week_mean    0.496380 historical_profile
+               prev_7d_same_hour_mean    0.161417 historical_profile
+                              weekend    0.085737           calendar
+                    is_public_holiday    0.052369           calendar
+        hist_mean_by_hour_day_of_week    0.043082 historical_profile
+                            month_cos    0.035257             cyclic
+                    is_holiday_window    0.023988           calendar
+                          day_of_week    0.020764           calendar
+                         weighted_CDD    0.017052            weather
+              hist_mean_by_hour_month    0.010102 historical_profile
+                      day_of_year_cos    0.007368             cyclic
+                      day_of_year_sin    0.007037             cyclic
+                             hour_cos    0.005372             cyclic
+                      day_of_week_cos    0.004819             cyclic
+                         weighted_HDD    0.003966            weather
+
+Weak months:
+ month  medium_horizon_RMSE  medium_horizon_MAPE  medium_horizon_R2
+     2          2042.812442             3.724829           0.876490
+     4          2161.143992             4.130037           0.818968
+     6          2699.193755             5.614098           0.861012
+
+Strong months:
+ month  medium_horizon_RMSE  medium_horizon_MAPE  medium_horizon_R2
+     1          1019.028836             1.777978           0.965366
+     5           968.709572             1.955832           0.958497
+     9          1045.584227             2.052354           0.967960
+    10           916.693023             2.006322           0.960401
+    11           790.016857             1.621342           0.973902
+
+Interpretation:
+- Relative to the original one-step model, the medium-horizon variant changes test R2 by -0.0142, RMSE by 221.19, and MAPE by 0.33.
+- Relative to the current rolling month-ahead workflow, the medium-horizon variant changes test R2 by 0.4567, RMSE by -3188.48, and MAPE by -6.06.
+- Relative to the final Table 8 model, the medium-horizon variant changes test R2 by 0.0196, RMSE by -259.90, and MAPE by -0.59.
+- If historical_profile family dominates feature importance and the model clearly outperforms the operational recursive variants, that indicates we can preserve a substantial amount of SARIMA-style temporal intelligence without direct hourly actual lags.
+- If weather and calendar features remain materially important, then the model is not merely replaying seasonal averages; it is blending temporal memory with exogenous temperature structure.
+
+Leakage audit conclusion:
+Refer to table3_medium_horizon_leakage_audit.txt. The intended interpretation is non-recursive, historical-profile-based, and direct-lag-free.

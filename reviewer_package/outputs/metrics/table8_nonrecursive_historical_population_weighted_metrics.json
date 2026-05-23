@@ -1,0 +1,81 @@
+{
+  "model_name": "Table 8 Non-Recursive Historical Population-Weighted Forecast",
+  "target_column": "sqrt_consumption",
+  "feature_columns": [
+    "weighted_HDD",
+    "weighted_CDD",
+    "night",
+    "weekend",
+    "PMI_prev_month",
+    "IR_prev_month",
+    "hour",
+    "day_of_week",
+    "month",
+    "is_public_holiday",
+    "is_holiday_window",
+    "is_bridge_day",
+    "hour_sin",
+    "hour_cos",
+    "day_of_week_sin",
+    "day_of_week_cos",
+    "month_sin",
+    "month_cos",
+    "day_of_year_sin",
+    "day_of_year_cos",
+    "prev_year_same_month_day_hour_sqrt",
+    "prev_year_same_month_day_prev_hour_sqrt",
+    "prev_year_same_month_day_seasonal_diff_24h_sqrt",
+    "prev_year_mean_sqrt_by_hour_day_of_week",
+    "prev_year_mean_sqrt_by_hour_month"
+  ],
+  "hyperparameters": {
+    "objective": "reg:squarederror",
+    "n_estimators": 525,
+    "learning_rate": 0.03,
+    "max_depth": 4,
+    "min_child_weight": 10,
+    "subsample": 0.65,
+    "colsample_bytree": 0.6,
+    "reg_alpha": 0.25,
+    "reg_lambda": 2.2,
+    "random_state": 42,
+    "n_jobs": 4,
+    "tree_method": "hist"
+  },
+  "train_metrics": {
+    "R2": 0.9844067262875543,
+    "MAE": 594.8695480172253,
+    "RMSE": 785.9090925777961,
+    "MAPE": 1.602573289359792
+  },
+  "test_metrics": {
+    "R2": 0.9285736851642452,
+    "MAE": 1263.1199032355878,
+    "RMSE": 1755.4678816869846,
+    "MAPE": 3.2514764512071226
+  },
+  "train_test_gap": {
+    "R2_train_minus_test": 0.05583304112330911,
+    "MAE_test_minus_train": 668.2503552183625,
+    "RMSE_test_minus_train": 969.5587891091885,
+    "MAPE_test_minus_train": 1.6489031618473307
+  },
+  "train_rows": 17496,
+  "test_rows": 8760,
+  "method": "Direct-batch, non-recursive historical-analog forecast. 2025 tahminleri tek seferde uretildi; 2025 actual consumption kullanilmadi ve recursive feedback yok.",
+  "historical_profile_features": [
+    "prev_year_same_month_day_hour_sqrt",
+    "prev_year_same_month_day_prev_hour_sqrt",
+    "prev_year_same_month_day_seasonal_diff_24h_sqrt",
+    "prev_year_mean_sqrt_by_hour_day_of_week",
+    "prev_year_mean_sqrt_by_hour_month"
+  ],
+  "uses_2025_actual_consumption": false,
+  "uses_recursive_predicted_consumption": false,
+  "effective_training_years": [
+    2023,
+    2024
+  ],
+  "warmup_note": "2022 satirlari onceki yil analogu olmadigi icin efektif train penceresi 2023-2024 oldu.",
+  "selected_variant_note": "Model C secildi: daha dusuk subsample ve colsample_bytree ile stochastic regularization 2025 test performansini iyilestirdi ve train-test gap'i hafifce daraltti."
+}

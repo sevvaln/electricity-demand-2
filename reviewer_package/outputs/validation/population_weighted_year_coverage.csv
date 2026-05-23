@@ -1,0 +1,5 @@
+﻿year,expected_city_count,present_city_count,missing_city_count,strict_mode_used,weighting_note,original_population_coverage_ratio,adjusted_weight_sum,min_hourly_observed_province_count,max_hourly_observed_province_count,min_hourly_weight_sum,max_hourly_weight_sum,missing_city_keys
+2022,82,78,4,False,renormalized_available_province_weights,0.972078324566265,1.0,62,78,0.7206467000179315,1.0,BARTIN | SAMSUN | SINOP | ZONGULDAK
+2023,82,78,4,False,renormalized_available_province_weights,0.972078324566265,1.0,60,78,0.7497988893754952,1.0,BARTIN | SAMSUN | SINOP | ZONGULDAK
+2024,82,78,4,False,renormalized_available_province_weights,0.972078324566265,1.0,70,78,0.777740765941154,1.0,BARTIN | SAMSUN | SINOP | ZONGULDAK
+2025,82,82,0,True,strict_full_coverage,1.0,1.0,57,82,0.7883804456620451,1.0,

@@ -1,0 +1,23 @@
+Table 8 Forecast 2026 Methodology Note
+
+Model: Table 8 Non-Recursive Historical Population-Weighted Forecast
+Target: sqrt_consumption
+Training period used for final forecast refit: [2022, 2023, 2024, 2025] (effective historical-analog rows 2023-2025)
+Forecast mode: non-recursive direct-batch
+
+Exogenous input handling:
+2026 weighted_HDD and weighted_CDD were generated using a seasonal-naive weather proxy: for each 2026 month-day-hour, the population-weighted HDD/CDD values from the same month-day-hour in 2025 were copied forward. This preserves the validated population-weighted temperature construction while avoiding any unavailable true 2026 weather inputs.
+2026 PMI_prev_month and IR_prev_month were generated using a seasonal-naive monthly macro scenario. Assumed monthly 2026 PMI and IR levels were set equal to the corresponding observed 2025 monthly values. Release alignment was preserved: January 2026 uses December 2025 observed values, while February-December 2026 use the assumed previous-month 2026 values.
+
+Historical feature rule for 2026:
+All Table 8 historical analog/profile features for 2026 were generated strictly from 2025 source information only. Exact previous-year analogs use the same month-day-hour keys from 2025; the previous-hour analog maps 2025 timestamps forward by one hour; the seasonal-difference analog uses 2025 sqrt_consumption minus its own 24-hour lag; and both grouped profile features use 2025-only grouped means. No 2022-2025 pooled grouped aggregation was used, and no predicted 2026 consumption was fed back into feature construction.
+
+Nonrecursive note:
+Table 8 2026 forecast was generated as a non-recursive direct-batch forecast. All 2026 feature values were constructed before prediction using only exogenous 2026 proxy inputs and 2025 historical source information. No predicted 2026 consumption was fed back into any feature.
+
+Validation checks:
+- Forecast row count: 8760
+- Datetime min/max: 2026-01-01 00:00:00 / 2026-12-31 23:00:00
+- Duplicate timestamp count: 0
+- Feature frame issues: None
+- Forecast output issues: None

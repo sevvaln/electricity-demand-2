@@ -1,0 +1,20 @@
+Population Weight Validation
+
+Population sum: 85,279,553
+Weight sum: 1.000000000000
+Min weight: 0.000987821782
+Max weight: 0.117261402625
+Weight sum approximately 1: True
+
+Top 10 cities/provinces by weight:
+        city_key      city_original  population   weight
+ ISTANBUL AVRUPA  İSTANBUL (AVRUPA)  10000000.0 0.117261
+ISTANBUL ANADOLU İSTANBUL (ANADOLU)   5907951.0 0.069277
+          ANKARA             ANKARA   5782285.0 0.067804
+           IZMIR              İZMİR   4462056.0 0.052323
+           BURSA              BURSA   3194720.0 0.037462
+         ANTALYA            ANTALYA   2688004.0 0.031520
+           KONYA              KONYA   2296347.0 0.026927
+           ADANA              ADANA   2274106.0 0.026666
+       SANLIURFA          ŞANLIURFA   2170110.0 0.025447
+       GAZIANTEP          GAZİANTEP   2154051.0 0.025259

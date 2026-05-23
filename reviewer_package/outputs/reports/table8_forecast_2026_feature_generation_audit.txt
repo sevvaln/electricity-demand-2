@@ -1,0 +1,19 @@
+Table 8 Forecast 2026 Feature Generation Audit
+
+Historical analog/profile source year:
+- All 2026 historical analog/profile features use 2025 source information only.
+- No 2022-2025 grouped aggregation was used for grouped profile features.
+
+Timeline:
+- Exact analogs: 2026 month-day-hour keys map to 2025 month-day-hour sqrt_consumption values.
+- Previous-hour analogs: 2025 timestamps were shifted forward by one hour before month-day-hour mapping.
+- Seasonal-difference analogs: 2025 sqrt_consumption minus its own 24-hour lag.
+- Grouped profiles: 2025-only mean sqrt_consumption by (hour, day_of_week) and by (hour, month).
+
+Future information usage:
+- No future 2026 actual consumption was used.
+- No predicted 2026 consumption was used in any feature.
+- Forecast is non-recursive and direct-batch.
+
+Feature completeness / missing-value check:
+- Issues: None

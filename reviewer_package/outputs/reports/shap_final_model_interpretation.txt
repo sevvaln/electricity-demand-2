@@ -1,0 +1,8 @@
+SHAP Interpretation: Final Table 8 Non-Recursive Historical Population-Weighted Forecast
+
+Most influential features by mean absolute SHAP value: prev_year_mean_sqrt_by_hour_day_of_week, prev_year_mean_sqrt_by_hour_month, weighted_CDD, weighted_HDD, IR_prev_month, PMI_prev_month.
+Historical analog features dominate the ranking.
+Historical analog features appearing in the top 10: prev_year_mean_sqrt_by_hour_day_of_week, prev_year_mean_sqrt_by_hour_month.
+Weather variables still matter: weighted_CDD, weighted_HDD appear among the top drivers.
+Calendar and holiday effects remain meaningful through: is_holiday_window, is_public_holiday.
+Interpretation is on the sqrt_consumption prediction scale, because the final model is trained on sqrt_consumption.

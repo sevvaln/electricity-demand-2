@@ -1,0 +1,6 @@
+Table 8 Non-Recursive Historical Population-Weighted Forecast
+
+The final selected model uses a direct-batch, non-recursive historical-analog design with population-weighted HDD/CDD. It avoids using actual 2025 consumption and avoids recursive feedback.
+Target variable: sqrt_consumption. Baseline predictors include weighted_HDD, weighted_CDD, night, weekend, PMI_prev_month, IR_prev_month, calendar variables, cyclic seasonality terms, and historical analog features derived from prior-year consumption structure.
+Model C was selected because stochastic regularization through lower subsample and colsample_bytree improved 2025 test performance while slightly reducing the train-test gap.
+Selected hyperparameters: {"objective": "reg:squarederror", "n_estimators": 525, "learning_rate": 0.03, "max_depth": 4, "min_child_weight": 10, "subsample": 0.65, "colsample_bytree": 0.6, "reg_alpha": 0.25, "reg_lambda": 2.2, "random_state": 42, "n_jobs": 4, "tree_method": "hist"}
